@@ -1,0 +1,22 @@
+<element name="vs-youtube">
+  <style>
+  </style>
+
+  <script type="text/javascript">
+  var VsYoutubeProto = Object.create(HTMLElement.prototype);
+
+  VsYoutubeProto.createdCallback = function(){
+    console.log('createdCallback');
+    this.textContent = 'createdCallback';
+  };
+
+  VsYoutubeProto.attachedCallback = function(){
+    console.log('attachedCallback');
+    this.textContent = 'attachedCallback';
+  };
+
+  document.registerElement('vs-youtube', {
+    prototype: VsYoutubeProto
+  });
+  </script>
+</element>
