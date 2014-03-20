@@ -1,18 +1,27 @@
 <element name="vs-youtube">
+  <template>
+    <figure>
+      <img />
+      <figcaption></figcaption>
+    </figure>
+  </template>
+
   <style>
   </style>
 
   <script type="text/javascript">
+  var _doc = (document._currentScript || document.currentScript).ownerDocument;
+  var _template = _doc.querySelector('template');
+
   var VsYoutubeProto = Object.create(HTMLElement.prototype);
 
   VsYoutubeProto.createdCallback = function(){
     console.log('createdCallback');
-    this.textContent = 'createdCallback';
+    this.innerHTML = _template.innerHTML;
   };
 
   VsYoutubeProto.attachedCallback = function(){
     console.log('attachedCallback');
-    this.textContent = 'attachedCallback';
   };
 
   document.registerElement('vs-youtube', {
