@@ -13,7 +13,7 @@
 
   <p>It takes one attribute - `videoId`. Set it to the id of the youtube video, and we embed it!</p>
 
-  <input type="text" value="eOG90Q8EfRo" onchange="document.querySelector('vs-youtube').attributes.videoId = this.value;" />
+  <input type="text" value="eOG90Q8EfRo" onchange="document.querySelector('vs-youtube').setAttribute('videoid', this.value);" />
 
   <vs-youtube videoId="eOG90Q8EfRo"></vs-youtube>
 

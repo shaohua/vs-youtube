@@ -1,5 +1,8 @@
 /* requires document, window */
 (function(document, window) {
+  /*
+   * window.YT, window.onYouTubeIframeAPIReady, window.Versal
+   */
 
   var VsYoutubeProto = {
     createdCallback: function(){
@@ -13,9 +16,10 @@
     },
 
     attributeChangedCallback: function(name, old, pending){
-      if(name == 'pending' && !pending) {
+      console.log('attributeChangedCallback', name);
+      if(name === 'pending' && !pending) {
         this.launch();
-      } else if(name == 'videoId') {
+      } else if(name === 'videoid') {
         this.launch();
       }
     },
@@ -60,7 +64,7 @@
     var existing = document.querySelectorAll('vs-youtube[pending]');
 
     Array.prototype.forEach.call(existing, function(el) {
-      console.log(el);
+      // console.log(el);
       el.removeAttribute('pending');
     });
   }
