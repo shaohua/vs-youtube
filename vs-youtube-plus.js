@@ -9,14 +9,22 @@
   JST['before'] = doc.querySelector('#before').innerHTML;
 
   var VsYoutubePlusProto = {
+    getYoutube: function(){
+      return this.querySelector('vs-youtube');
+    },
+
+    getErrorMsg: function(){
+      return this.querySelector('vs-error-msg');
+    },
+
     /**
-    * a simple getter and setter for 'status' attribute
+    * a simple getter and setter for 'videoid' attribute
     */
     videoid: function(value){
       if(value){
-        this.setAttribute('videoid', value);
+        this.getYoutube().setAttribute('videoid', value);
       } else {
-        return this.getAttribute('videoid');
+        return this.getYoutube().getAttribute('videoid');
       }
     },
 
