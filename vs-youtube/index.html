@@ -9,30 +9,6 @@
   <style>
   </style>
 
-  <script type="text/javascript">
-  var _doc = (document._currentScript || document.currentScript).ownerDocument;
-  var _template = _doc.querySelector('template');
-
-  var VsYoutubeProto = Object.create(HTMLElement.prototype);
-
-  var createIframe = function(vid){
-    vid = vid || 'nKIu9yen5nc'; //default code.org video
-    return '<iframe id="player" type="text/html" width="640" height="390"' +
-           'src="http://www.youtube.com/embed/' + vid + '?enablejsapi=1&origin=http://example.com"'+
-           'frameborder="0"></iframe>';
-  };
-
-  VsYoutubeProto.createdCallback = function(){
-    console.log('createdCallback');
-    this.innerHTML = createIframe( this.getAttribute('vid') );
-  };
-
-  VsYoutubeProto.attachedCallback = function(){
-    console.log('attachedCallback');
-  };
-
-  document.registerElement('vs-youtube', {
-    prototype: VsYoutubeProto
-  });
-  </script>
+  <script type="text/javascript" src="./iframe_api.js"></script>
+  <script type="text/javascript" src="./vs-youtube.js"></script>
 </element>
