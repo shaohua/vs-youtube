@@ -25,9 +25,9 @@
     },
 
     launch: function(){
-      if(this.getAttribute('videoId')) {
+      if(this.getAttribute('videoid')) {
         var options = {
-          videoId: this.getAttribute('videoId')
+          videoid: this.getAttribute('videoid')
         };
 
         this.createPlayerWithOptions(options);

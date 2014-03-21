@@ -3,6 +3,10 @@
   /*
    * window.Versal
    */
+  var JST = {};
+  var doc = (document._currentScript || document.currentScript).ownerDocument;
+
+  JST['before'] = doc.querySelector('#before').innerHTML;
 
   var VsYoutubePlusProto = {
     /**
@@ -33,7 +37,7 @@
     },
 
     render: function(){
-      this.innerHTML = 'vs-youtube-plus';
+      this.innerHTML = JST['before'];
     }
   };
 
