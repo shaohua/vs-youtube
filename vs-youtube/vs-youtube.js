@@ -1,52 +1,47 @@
-var _doc = (document._currentScript || document.currentScript).ownerDocument;
-var _template = _doc.querySelector('template');
+(function() {
+  if(window.onYouTubeIframeAPIReady) {
+    console.warn('vs-youtube: Warning! onYouTubeIframeAPIReady is already defined! That should not be happening.')
+  };
 
-var VsYoutubeProto = Object.create(HTMLElement.prototype);
+  function createYoutubePlayerInElement(element, options){
+    return new window.YT.Player(element, options);
+  };
 
-VsYoutubeProto.createdCallback = function(){
-  console.log('createdCallback');
-  this.innerHTML = '<div id="player"></div>';
-};
+  var VsYoutubeProto = Object.create(HTMLElement.prototype);
 
-VsYoutubeProto.attachedCallback = function(){
-  console.log('attachedCallback');
-};
-
-document.registerElement('vs-youtube', {
-  prototype: VsYoutubeProto
-});
-
-
-// 3. This function creates an <iframe> (and YouTube player)
-//    after the API code downloads.
-var player;
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player', {
-    height: '390',
-    width: '640',
-    videoId: 'M7lc1UVf-VE',
-    events: {
-      'onReady': onPlayerReady,
-      'onStateChange': onPlayerStateChange
+  VsYoutubeProto.attachedCallback = function(){
+    if(VsYoutubeProto.YT) {
+      this.launch();
+    } else {
+      return this.setAttribute('pending', 'pending');
     }
-  });
-}
+  };
 
-// 4. The API will call this function when the video player is ready.
-function onPlayerReady(event) {
-  event.target.playVideo();
-}
+  VsYoutubeProto.launch = function(){
+    var videoId = this.getAttribute('videoid');
 
-// 5. The API calls this function when the player's state changes.
-//    The function indicates that when playing a video (state=1),
-//    the player should play for six seconds and then stop.
-var done = false;
-function onPlayerStateChange(event) {
-  if (event.data == YT.PlayerState.PLAYING && !done) {
-    setTimeout(stopVideo, 6000);
-    done = true;
+    var options = {
+      videoId: videoId,
+      width: '100%'
+    };
+
+    new VsYoutubeProto.YT.Player(this, options);
+  };
+
+  VsYoutubeProto.attributeChangedCallback = function(name, old, pending){
+    if(name == 'pending' && !pending) {
+      this.launch();
+    };
   }
-}
-function stopVideo() {
-  player.stopVideo();
-}
+
+  window.onYouTubeIframeAPIReady = function(){
+    VsYoutubeProto.YT = window.YT;
+    var existing = document.querySelectorAll('vs-youtube[pending]');
+
+    Array.prototype.forEach.call(existing, function(el) {
+      el.removeAttribute('pending');
+    });
+  };
+
+  document.registerElement('vs-youtube', { prototype: VsYoutubeProto });
+})();
