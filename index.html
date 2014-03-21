@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Web component</title>
-
-    <script src="http://test.versal.io/components/versal-runtime/v12.js"></script>
-    <link rel="import" href="vs-youtube/index.html">
+    <title>YouTube web component</title>
+    <script src="https://test.versal.io/components/versal-runtime/v12.js"></script>
+    <link rel="import" href="vs-youtube.html" />
   </head>
 
   <body>
+
   <h1>&lt;vs-youtube&gt;</h1>
   <p>Hola! This is awesome youtube gadget</p>
 
   <p>It takes one attribute - `videoId`. Set it to the id of the youtube video, and we embed it!</p>
+
   <input type="text" value="eOG90Q8EfRo" onchange="document.querySelector('vs-youtube').attributes.videoId = this.value;" />
 
   <vs-youtube videoId="eOG90Q8EfRo"></vs-youtube>
