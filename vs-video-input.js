@@ -10,6 +10,10 @@
     createdCallback: function(){
       console.log('createdCallback');
       this.render();
+
+      this.addEventListener('input', function(){
+        this.setAttribute('videoid', '123');
+      }.bind(this));
     },
 
     attachedCallback: function(){
@@ -17,9 +21,9 @@
     },
 
     attributeChangedCallback: function(name){
-      // console.log('attributeChangedCallback', name);
-      if(name === 'status') {
-        this.render();
+      console.log('attributeChangedCallback', name);
+      if(name === 'videoid') {
+        //should trigger event
       }
     },
 
