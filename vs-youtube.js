@@ -1,5 +1,5 @@
 /* requires document, window */
-(function() {
+(function(document, window) {
 
   var VsYoutubeProto = {
     createdCallback: function(){
@@ -9,7 +9,7 @@
     attachedCallback: function(){
       if(window.YT && this.getAttribute('videoid')) {
         this.removeAttribute('pending');
-      };
+      }
     },
 
     attributeChangedCallback: function(name, old, pending){
@@ -34,7 +34,7 @@
       // If player already exists - remove it
       if(this.player) {
         this.player.destroy();
-      };
+      }
 
       // YT API replaces the node with iframe
       var placeholder = document.createElement('div');
@@ -47,13 +47,14 @@
 
   function registerYouTubeAPIOnce(){
     if(window.onYouTubeIframeAPIReady) {
-      console.warn('vs-youtube: Warning! onYouTubeIframeAPIReady is already defined! That should not be happening.')
-    };
+      console.warn('vs-youtube: Warning! onYouTubeIframeAPIReady is already defined! '+
+        'That should not be happening.');
+    }
 
     window.onYouTubeIframeAPIReady = function(){
       resolvePendingPlayers();
     };
-  };
+  }
 
   function resolvePendingPlayers() {
     var existing = document.querySelectorAll('vs-youtube[pending]');
@@ -62,9 +63,9 @@
       console.log(el);
       el.removeAttribute('pending');
     });
-  };
+  }
 
   registerYouTubeAPIOnce();
 
   window.Versal.registerElement('vs-youtube', VsYoutubeProto);
-})();
+})(document, window);
