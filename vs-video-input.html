@@ -1,0 +1,18 @@
+<element name="vs-video-input">
+  <template>
+    <div contenteditable="true" data-placeholder="Paste the embed code here"></div>
+  </template>
+
+  <style>
+  vs-video-input {
+    display: block;
+  }
+  /*http://stackoverflow.com/questions/9093424/placeholder-in-contenteditable-focus-event-issue*/
+  vs-video-input [contentEditable=true]:empty:not(:focus):before{
+    content:attr(data-placeholder);
+    color: grey;
+  }
+  </style>
+
+  <script type="text/javascript" src="./vs-video-input.js"></script>
+</element>
