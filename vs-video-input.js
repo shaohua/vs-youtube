@@ -8,7 +8,7 @@
 
   var VsVideoInputProto = {
     createdCallback: function(){
-      console.log('createdCallback');
+      // console.log('createdCallback');
       this.render();
 
       this.addEventListener('input', function(){
@@ -17,7 +17,7 @@
     },
 
     attachedCallback: function(){
-      console.log('attachedCallback');
+      // console.log('attachedCallback');
     },
 
     attributeChangedCallback: function(name){

@@ -29,12 +29,12 @@
     },
 
     createdCallback: function(){
-      console.log('createdCallback');
+      // console.log('createdCallback');
       this.render();
     },
 
     attachedCallback: function(){
-      console.log('attachedCallback');
+      // console.log('attachedCallback');
     },
 
     attributeChangedCallback: function(name){

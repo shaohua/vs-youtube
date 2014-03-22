@@ -41,7 +41,13 @@
           videoid: this.getAttribute('videoid')
         };
 
-        this.createPlayerWithOptions(options);
+        if(window.YT && window.YT.Player){
+          this.createPlayerWithOptions(options);
+        } else {
+          setTimeout(function(){
+            this.launch();
+          }.bind(this), 1000);
+        }
       }
     },
 
