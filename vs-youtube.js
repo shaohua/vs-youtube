@@ -35,10 +35,21 @@
       }
     },
 
+    onPlayerReady: function(){
+      console.log('onPlayerReady');
+    },
+    onPlayerStateChange: function(){
+      console.log('onPlayerStateChange');
+    },
+
     launch: function(){
       if(this.getAttribute('videoid')) {
         var options = {
-          videoId: this.getAttribute('videoid')
+          videoId: this.getAttribute('videoid'),
+          events: {
+            'onReady': this.onPlayerReady.bind(this),
+            'onStateChange': this.onPlayerStateChange.bind(this)
+          }
         };
 
         if(window.YT && window.YT.Player){
