@@ -38,7 +38,7 @@
     launch: function(){
       if(this.getAttribute('videoid')) {
         var options = {
-          videoid: this.getAttribute('videoid')
+          videoId: this.getAttribute('videoid')
         };
 
         if(window.YT && window.YT.Player){
