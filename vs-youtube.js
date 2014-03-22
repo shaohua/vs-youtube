@@ -36,22 +36,36 @@
     },
 
     onPlayerReady: function(){
-      console.log('onPlayerReady');
+      // console.log('onPlayerReady');
     },
-    onPlayerStateChange: function(){
-      console.log('onPlayerStateChange');
+
+    onPlayerStateChange: function(event){
+      /**
+       * YT.PlayerState.ENDED
+       * YT.PlayerState.PLAYING
+       * YT.PlayerState.PAUSED
+       * YT.PlayerState.BUFFERING
+       * YT.PlayerState.CUED
+       */
+      console.log('onPlayerStateChange', event.data);
+      if (event.data === window.YT.PlayerState.PLAYING) {
+        // event.target.pauseVideo();
+      } else if (event.data === window.YT.PlayerState.PLAYING){
+        //
+      }
     },
 
     launch: function(){
       if(this.getAttribute('videoid')) {
         var options = {
-          videoId: this.getAttribute('videoid'),
+          videoId: this.getAttribute('videoid'),  //NOT a typo
           events: {
             'onReady': this.onPlayerReady.bind(this),
             'onStateChange': this.onPlayerStateChange.bind(this)
           }
         };
 
+        // when window.YT.Player is not avaliable, wait for 1s and check again
         if(window.YT && window.YT.Player){
           this.createPlayerWithOptions(options);
         } else {
