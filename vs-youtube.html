@@ -1,10 +1,20 @@
-<element name="vs-youtube">
+<versal-element name="vs-youtube" attributes="video-id">
   <style>
   vs-youtube {
     display: block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 61%;
+    box-sizing: border-box;
+  }
+
+  vs-youtube > iframe {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
   }
   </style>
 
-  <script type="text/javascript" src="./vs-youtube.js"></script>
-  <script type="text/javascript" src="//www.youtube.com/iframe_api"></script>
+  <script src="./vs-youtube.js"></script>
 </element>

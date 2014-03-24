@@ -1,86 +1,73 @@
-/* requires document, window */
-(function(document, window) {
-  /*
-   * window.YT, window.onYouTubeIframeAPIReady, window.Versal
-   */
-
+(function() {
   var VsYoutubeProto = {
-    /**
-     * a simple getter and setter for 'status' attribute
-     */
-    videoid: function(value){
-      if(value){
-        this.setAttribute('videoid', value);
-      } else {
-        return this.getAttribute('videoid');
-      }
-    },
-
-    createdCallback: function(){
-      this.setAttribute('pending', 'pending');
-    },
-
     attachedCallback: function(){
-      if(window.YT && this.getAttribute('videoid')) {
-        this.removeAttribute('pending');
-      }
-    },
+      this.setAttribute('vs-loading', 'true');
 
-    attributeChangedCallback: function(name, old, pending){
-      console.log('attributeChangedCallback', name);
-      if(name === 'pending' && !pending) {
-        this.launch();
-      } else if(name === 'videoid') {
-        this.launch();
-      }
-    },
-
-    launch: function(){
-      if(this.getAttribute('videoid')) {
-        var options = {
-          videoid: this.getAttribute('videoid')
-        };
-
-        this.createPlayerWithOptions(options);
-      }
-    },
-
-    createPlayerWithOptions: function(options){
-      // If player already exists - remove it
-      if(this.player) {
-        this.player.destroy();
-      }
-
-      // YT API replaces the node with iframe
       var placeholder = document.createElement('div');
       this.appendChild(placeholder);
 
-      // create a player and store the reference
-      this.player = new window.YT.Player(placeholder, options);
+      if(window.YT && window.YT.loaded) {
+        this.onYoutubeApiReady();
+      }
+    },
+
+    onYoutubeApiReady: function(){
+      var options = {
+        events: {
+          'onReady': this.onPlayerReady.bind(this),
+          'onStateChange': this.onPlayerStateChange.bind(this)
+        }
+      };
+
+      this.player = new window.YT.Player(this.firstElementChild, options);
+    },
+
+    onPlayerReady: function(){
+      this.cueCurrentVideo();
+    },
+
+    onPlayerStateChange: function(e){
+    },
+
+    cueCurrentVideo: function(){
+      if(this.videoId && this.player) {
+        this.player.cueVideoById(this.videoId);
+        this.removeAttribute('vs-loading');
+      }
+    },
+
+    attributeChangedCallback: function(name, old, current){
+      if(name == 'video-id') { this.cueCurrentVideo(); }
     }
   };
 
   function registerYouTubeAPIOnce(){
-    if(window.onYouTubeIframeAPIReady) {
-      console.warn('vs-youtube: Warning! onYouTubeIframeAPIReady is already defined! '+
-        'That should not be happening.');
-    }
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = '//www.youtube.com/iframe_api';
+
+    script.onerror = function(){
+      // disable whole family of gadgets and display message instead
+    };
+
+    document.head.appendChild(script);
 
     window.onYouTubeIframeAPIReady = function(){
       resolvePendingPlayers();
     };
-  }
+  };
 
   function resolvePendingPlayers() {
-    var existing = document.querySelectorAll('vs-youtube[pending]');
+    var existingElements = document.querySelectorAll('vs-youtube');
 
-    Array.prototype.forEach.call(existing, function(el) {
-      // console.log(el);
-      el.removeAttribute('pending');
+    Array.prototype.forEach.call(existingElements, function(elt){
+      if(elt.onYoutubeApiReady) {
+        elt.onYoutubeApiReady();
+      }
     });
-  }
+  };
 
   registerYouTubeAPIOnce();
 
   window.Versal.registerElement('vs-youtube', VsYoutubeProto);
-})(document, window);
+})();
